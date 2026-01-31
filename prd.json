@@ -1,0 +1,1415 @@
+{
+  "project": "FairBracket",
+  "branchName": "ralph/fairbracket-platform",
+  "description": "Web-Based Tournament Scheduling & Operations Platform with constraint-aware scheduling and simulated annealing optimization",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize monorepo structure",
+      "description": "As a developer, I need a well-organized monorepo so that frontend, backend, and optimization services are manageable.",
+      "acceptanceCriteria": [
+        "Create monorepo with /apps/web, /apps/api, /apps/optimizer, /packages/shared directories",
+        "Configure pnpm workspaces in pnpm-workspace.yaml",
+        "Add root package.json with workspace scripts (dev, build, test, lint, typecheck)",
+        "Add .nvmrc with Node 20 LTS",
+        "Add .python-version with 3.11",
+        "ESLint configured at root level",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Configure TypeScript base configuration",
+      "description": "As a developer, I need shared TypeScript configuration so that all packages have consistent typing.",
+      "acceptanceCriteria": [
+        "Create tsconfig.base.json at root with strict mode enabled",
+        "Configure path aliases for @fairbracket/* packages",
+        "Set target to ES2022, module to ESNext",
+        "Enable sourceMap and declaration",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create shared types package",
+      "description": "As a developer, I need shared TypeScript types so that frontend and backend share common interfaces.",
+      "acceptanceCriteria": [
+        "Create /packages/shared with package.json and tsconfig.json",
+        "Export TournamentType enum: player_pooled, team_based",
+        "Export TournamentFormat enum: round_robin, pool_play, pool_to_bracket, single_elim, double_elim, swiss",
+        "Export TournamentStatus enum: draft, published, in_progress, completed, cancelled",
+        "Export UserRole enum: owner, admin, organizer, referee, captain, player",
+        "Export base interfaces: Organization, User, Tournament, Team, Player, Game",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Set up React frontend scaffold",
+      "description": "As a developer, I need a React frontend scaffold so that UI development can begin.",
+      "acceptanceCriteria": [
+        "Initialize Vite + React + TypeScript in /apps/web",
+        "Configure TailwindCSS with default config",
+        "Add React Router v6 for client-side routing",
+        "Create placeholder App.tsx with router setup",
+        "Add reference to @fairbracket/shared package",
+        "Dev server runs on port 5173 without errors",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Add Tanstack Query to frontend",
+      "description": "As a developer, I need data fetching infrastructure so that API calls are managed properly.",
+      "acceptanceCriteria": [
+        "Install @tanstack/react-query",
+        "Create QueryClientProvider wrapper in App.tsx",
+        "Configure default staleTime and cacheTime",
+        "Add React Query Devtools for development",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Create basic frontend layout components",
+      "description": "As a developer, I need layout components so that pages have consistent structure.",
+      "acceptanceCriteria": [
+        "Create Header component with logo placeholder and nav links",
+        "Create Sidebar component with collapsible menu",
+        "Create MainLayout component combining Header, Sidebar, and content area",
+        "Create PublicLayout component for unauthenticated pages",
+        "Add responsive styles for mobile/desktop",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Set up Node.js API scaffold",
+      "description": "As a developer, I need a Node.js API scaffold so that backend development can begin.",
+      "acceptanceCriteria": [
+        "Initialize Fastify + TypeScript in /apps/api",
+        "Configure dotenv for environment variables",
+        "Add health check endpoint at GET /health returning {status: 'ok'}",
+        "Configure pino logger",
+        "Add reference to @fairbracket/shared package",
+        "API starts on port 3000 and responds to health check",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Add Zod validation to API",
+      "description": "As a developer, I need request validation so that API inputs are validated.",
+      "acceptanceCriteria": [
+        "Install zod and fastify-type-provider-zod",
+        "Configure Zod type provider for Fastify",
+        "Create example validated endpoint to verify setup",
+        "Add error handler for validation errors returning 400 with details",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Set up Python optimization service scaffold",
+      "description": "As a developer, I need a Python optimization service so that simulated annealing can be developed.",
+      "acceptanceCriteria": [
+        "Initialize Python project in /apps/optimizer with pyproject.toml",
+        "Configure uv or poetry for dependency management",
+        "Add FastAPI as HTTP framework",
+        "Add health check endpoint at GET /health returning {status: 'ok'}",
+        "Add pytest configuration in pyproject.toml",
+        "Service starts on port 8000 and responds to health check",
+        "mypy passes with strict mode"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Configure Prisma ORM for database",
+      "description": "As a developer, I need an ORM so that database operations are type-safe.",
+      "acceptanceCriteria": [
+        "Install prisma in /apps/api",
+        "Create prisma/schema.prisma with PostgreSQL datasource",
+        "Configure DATABASE_URL environment variable",
+        "Add prisma generate and prisma migrate scripts",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Create organization and user schema",
+      "description": "As a developer, I need organization and user models so that multi-tenancy works correctly.",
+      "acceptanceCriteria": [
+        "Add Organization model: id, name, slug (unique), subscriptionTier, createdAt, updatedAt",
+        "Add User model: id, email (unique), name, passwordHash, organizationId, role, createdAt",
+        "Add UserRole enum in Prisma: OWNER, ADMIN, ORGANIZER, REFEREE, CAPTAIN, PLAYER",
+        "Add SubscriptionTier enum: FREE, STARTER, PRO, ENTERPRISE",
+        "Add foreign key from User to Organization",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Create tournament schema",
+      "description": "As a developer, I need a tournament model so that tournament configuration is stored.",
+      "acceptanceCriteria": [
+        "Add Tournament model: id, organizationId, name, slug, sport, format, status, tournamentType",
+        "Add startDate, endDate, timezone fields",
+        "Add settings Json field for format-specific config",
+        "Add TournamentType enum: PLAYER_POOLED, TEAM_BASED",
+        "Add TournamentFormat enum: ROUND_ROBIN, POOL_PLAY, POOL_TO_BRACKET, SINGLE_ELIM, DOUBLE_ELIM, SWISS",
+        "Add TournamentStatus enum: DRAFT, PUBLISHED, IN_PROGRESS, COMPLETED, CANCELLED",
+        "Add foreign key to Organization",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Create venue and court schema",
+      "description": "As a developer, I need venue and court models so that facilities can be configured.",
+      "acceptanceCriteria": [
+        "Add Venue model: id, organizationId, name, address, timezone, createdAt",
+        "Add Court model: id, venueId, name, surfaceType, isIndoor, isAvailable, notes",
+        "Add TimeSlot model: id, courtId, startTime, endTime, isBlocked",
+        "Add foreign keys: Court -> Venue, TimeSlot -> Court, Venue -> Organization",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Create team and player schema",
+      "description": "As a developer, I need team and player models so that participants can be managed.",
+      "acceptanceCriteria": [
+        "Add Player model: id, organizationId, name, email, phone, skillRating, gender, emergencyContact",
+        "Add Team model: id, tournamentId, name, seed, poolId (nullable)",
+        "Add TeamPlayer junction model: id, teamId, playerId, isCaptain, jerseyNumber",
+        "Add Gender enum: MALE, FEMALE, OTHER",
+        "Add SkillLevel enum: BEGINNER, INTERMEDIATE, ADVANCED, EXPERT",
+        "Add foreign keys appropriately",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Create pool and bracket schema",
+      "description": "As a developer, I need pool and bracket models so that tournament structures are stored.",
+      "acceptanceCriteria": [
+        "Add Pool model: id, tournamentId, name",
+        "Add Bracket model: id, tournamentId, type (SINGLE_ELIM, DOUBLE_ELIM)",
+        "Add BracketSlot model: id, bracketId, position, teamId (nullable), sourceGameId, roundNumber, matchNumber",
+        "Update Team model to have optional poolId foreign key",
+        "Add foreign keys appropriately",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Create game and round schema",
+      "description": "As a developer, I need game and round models so that schedules can be stored.",
+      "acceptanceCriteria": [
+        "Add Round model: id, tournamentId, roundNumber, roundType (POOL, BRACKET, SWISS)",
+        "Add Game model: id, roundId, courtId, timeSlotId, homeTeamId, awayTeamId",
+        "Add Game fields: status, homeScore, awayScore, winnerId, scheduledStart, actualStart, actualEnd",
+        "Add GameStatus enum: SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED",
+        "Add foreign keys appropriately",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Create optimization config schema",
+      "description": "As a developer, I need an optimization weights model so that fairness preferences are configurable.",
+      "acceptanceCriteria": [
+        "Add OptimizationConfig model: id, tournamentId (unique)",
+        "Add weight fields as Float: skillBalance, seedBalance, teammateRepetitionPenalty",
+        "Add weight fields: opponentRepetitionPenalty, sitOutEquity, restTimeVariance, courtUtilization, genderBalance",
+        "Set default values to 0.5 for all weights",
+        "Add foreign key to Tournament (one-to-one)",
+        "Run prisma generate successfully",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Run initial database migration",
+      "description": "As a developer, I need the database schema applied so that the API can persist data.",
+      "acceptanceCriteria": [
+        "Run prisma migrate dev --name init successfully",
+        "Migration creates all tables in PostgreSQL",
+        "Generate Prisma client with prisma generate",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Create Prisma client singleton",
+      "description": "As a developer, I need a Prisma client instance so that the API can query the database.",
+      "acceptanceCriteria": [
+        "Create /apps/api/src/lib/prisma.ts with singleton pattern",
+        "Handle hot reload in development (prevent multiple clients)",
+        "Export prisma client instance",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Implement password hashing utilities",
+      "description": "As a developer, I need password hashing so that user credentials are stored securely.",
+      "acceptanceCriteria": [
+        "Install bcrypt package",
+        "Create /apps/api/src/lib/password.ts with hashPassword and verifyPassword functions",
+        "Use bcrypt cost factor of 12",
+        "Add unit tests for hash and verify",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 20,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Implement JWT utilities",
+      "description": "As a developer, I need JWT utilities so that authentication tokens can be created and verified.",
+      "acceptanceCriteria": [
+        "Install jsonwebtoken package and @types/jsonwebtoken",
+        "Create /apps/api/src/lib/jwt.ts with signAccessToken, signRefreshToken, verifyToken functions",
+        "Access token expires in 15 minutes",
+        "Refresh token expires in 7 days",
+        "Include userId and organizationId in token payload",
+        "Use JWT_SECRET from environment variable",
+        "Add unit tests",
+        "Typecheck passes",
+        "Tests pass"
+      ],
+      "priority": 21,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Implement user registration endpoint",
+      "description": "As a user, I want to register so that I can create an account and organization.",
+      "acceptanceCriteria": [
+        "POST /api/auth/register accepts email, password, name, organizationName",
+        "Validate email format and password minimum length (8 chars)",
+        "Create organization with slug derived from name",
+        "Create user with OWNER role linked to organization",
+        "Hash password before storing",
+        "Return user data (without password) and tokens",
+        "Return 409 if email already exists",
+        "Typecheck passes"
+      ],
+      "priority": 22,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Implement user login endpoint",
+      "description": "As a user, I want to log in so that I can access my account.",
+      "acceptanceCriteria": [
+        "POST /api/auth/login accepts email and password",
+        "Verify password against stored hash",
+        "Return access token and refresh token on success",
+        "Return 401 for invalid credentials",
+        "Include user data in response",
+        "Typecheck passes"
+      ],
+      "priority": 23,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Implement JWT authentication middleware",
+      "description": "As a developer, I need JWT middleware so that routes can be protected.",
+      "acceptanceCriteria": [
+        "Create authenticate middleware/hook for Fastify",
+        "Extract Bearer token from Authorization header",
+        "Verify token and attach user context to request",
+        "Return 401 for missing or invalid token",
+        "Export AuthenticatedRequest type with user property",
+        "Typecheck passes"
+      ],
+      "priority": 24,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-025",
+      "title": "Implement token refresh endpoint",
+      "description": "As a user, I want to refresh my access token so that I stay logged in.",
+      "acceptanceCriteria": [
+        "POST /api/auth/refresh accepts refreshToken in body",
+        "Verify refresh token is valid",
+        "Return new access token and refresh token",
+        "Return 401 for invalid refresh token",
+        "Typecheck passes"
+      ],
+      "priority": 25,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-026",
+      "title": "Implement role-based access control helper",
+      "description": "As a developer, I need RBAC so that endpoints are protected by role.",
+      "acceptanceCriteria": [
+        "Create requireRole middleware factory that accepts allowed roles",
+        "Check user role from request context against allowed roles",
+        "Return 403 if role not permitted",
+        "Define role hierarchy: OWNER > ADMIN > ORGANIZER > REFEREE > CAPTAIN > PLAYER",
+        "Typecheck passes"
+      ],
+      "priority": 26,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-027",
+      "title": "Implement get current user endpoint",
+      "description": "As a user, I want to get my profile so that I can see my account details.",
+      "acceptanceCriteria": [
+        "GET /api/auth/me returns current user data",
+        "Include organization data in response",
+        "Requires authentication",
+        "Typecheck passes"
+      ],
+      "priority": 27,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-028",
+      "title": "Create login page UI",
+      "description": "As a user, I want a login page so that I can access my account.",
+      "acceptanceCriteria": [
+        "Create /login route with login form",
+        "Form fields: email, password",
+        "Submit calls POST /api/auth/login",
+        "Store tokens in localStorage on success",
+        "Redirect to dashboard on success",
+        "Show error message on failure",
+        "Link to registration page",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 28,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-029",
+      "title": "Create registration page UI",
+      "description": "As a user, I want a registration page so that I can create an account.",
+      "acceptanceCriteria": [
+        "Create /register route with registration form",
+        "Form fields: name, email, password, organizationName",
+        "Submit calls POST /api/auth/register",
+        "Store tokens in localStorage on success",
+        "Redirect to dashboard on success",
+        "Show validation errors",
+        "Link to login page",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 29,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-030",
+      "title": "Create auth context and protected routes",
+      "description": "As a developer, I need auth context so that authentication state is managed in React.",
+      "acceptanceCriteria": [
+        "Create AuthContext with user, login, logout, isLoading state",
+        "Create useAuth hook for accessing auth context",
+        "Create ProtectedRoute component that redirects to /login if not authenticated",
+        "Auto-refresh token before expiry",
+        "Typecheck passes"
+      ],
+      "priority": 30,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-031",
+      "title": "Create dashboard home page",
+      "description": "As a user, I want a dashboard so that I can see my tournaments.",
+      "acceptanceCriteria": [
+        "Create /dashboard route using MainLayout",
+        "Show welcome message with user name",
+        "Show empty state if no tournaments",
+        "Add 'Create Tournament' button",
+        "Protected route (requires authentication)",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 31,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-032",
+      "title": "Implement list tournaments endpoint",
+      "description": "As a user, I want to list my tournaments so that I can see all events.",
+      "acceptanceCriteria": [
+        "GET /api/tournaments returns tournaments for user's organization",
+        "Support pagination with limit and offset query params",
+        "Support status filter query param",
+        "Order by createdAt descending",
+        "Requires authentication",
+        "Typecheck passes"
+      ],
+      "priority": 32,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-033",
+      "title": "Implement create tournament endpoint",
+      "description": "As an organizer, I want to create a tournament so that I can start configuration.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments accepts name, sport, tournamentType, format, startDate, endDate, timezone",
+        "Generate slug from name",
+        "Set status to DRAFT",
+        "Link to user's organization",
+        "Return created tournament",
+        "Requires ORGANIZER role or higher",
+        "Typecheck passes"
+      ],
+      "priority": 33,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-034",
+      "title": "Implement get tournament endpoint",
+      "description": "As a user, I want to get tournament details so that I can view configuration.",
+      "acceptanceCriteria": [
+        "GET /api/tournaments/:id returns tournament with all relations",
+        "Include pools, teams, rounds, optimizationConfig",
+        "Return 404 if not found",
+        "Return 403 if not in user's organization",
+        "Requires authentication",
+        "Typecheck passes"
+      ],
+      "priority": 34,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-035",
+      "title": "Implement update tournament endpoint",
+      "description": "As an organizer, I want to update tournament details so that I can modify configuration.",
+      "acceptanceCriteria": [
+        "PATCH /api/tournaments/:id accepts partial tournament data",
+        "Cannot change organizationId",
+        "Cannot modify critical fields if status is not DRAFT (with warning)",
+        "Return updated tournament",
+        "Requires ORGANIZER role",
+        "Typecheck passes"
+      ],
+      "priority": 35,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-036",
+      "title": "Create tournament list component",
+      "description": "As a user, I want to see my tournaments in a list so that I can manage them.",
+      "acceptanceCriteria": [
+        "Create TournamentList component fetching from /api/tournaments",
+        "Show tournament name, sport, dates, status",
+        "Show tournament type badge (player pooled vs team based)",
+        "Click navigates to tournament detail page",
+        "Show loading state",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 36,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-037",
+      "title": "Create tournament wizard - basic info step",
+      "description": "As an organizer, I want to enter basic tournament info so that I can start configuration.",
+      "acceptanceCriteria": [
+        "Create /tournaments/new route with wizard UI",
+        "Step 1: name, sport (text input), tournament type (radio), start date, end date, timezone",
+        "Validate required fields",
+        "Next button advances to format step",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 37,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-038",
+      "title": "Create tournament wizard - format step",
+      "description": "As an organizer, I want to select tournament format so that the structure is defined.",
+      "acceptanceCriteria": [
+        "Step 2: Format selection with radio buttons",
+        "Show format options: Round Robin, Pool Play, Pool to Bracket, Single Elimination, Double Elimination, Swiss",
+        "Show brief description for each format",
+        "Back button returns to step 1, Next advances to step 3",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 38,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-039",
+      "title": "Create tournament wizard - review and create step",
+      "description": "As an organizer, I want to review and create my tournament so that it is saved.",
+      "acceptanceCriteria": [
+        "Step 3: Review all entered information",
+        "Show summary of basic info and format",
+        "Create Tournament button calls POST /api/tournaments",
+        "On success, redirect to tournament detail page",
+        "Show error messages on failure",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 39,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-040",
+      "title": "Create tournament detail page shell",
+      "description": "As an organizer, I want a tournament detail page so that I can manage a specific tournament.",
+      "acceptanceCriteria": [
+        "Create /tournaments/:id route",
+        "Fetch tournament data from API",
+        "Show tournament name, sport, dates, status in header",
+        "Add tab navigation: Overview, Teams, Schedule, Standings",
+        "Show loading and error states",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 40,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-041",
+      "title": "Implement venue CRUD endpoints",
+      "description": "As an organizer, I want to manage venues so that I can configure facilities.",
+      "acceptanceCriteria": [
+        "GET /api/venues returns venues for organization",
+        "POST /api/venues creates new venue",
+        "GET /api/venues/:id returns single venue with courts",
+        "PATCH /api/venues/:id updates venue",
+        "DELETE /api/venues/:id deletes venue (soft delete or cascade)",
+        "Requires authentication",
+        "Typecheck passes"
+      ],
+      "priority": 41,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-042",
+      "title": "Implement court CRUD endpoints",
+      "description": "As an organizer, I want to manage courts so that games can be scheduled.",
+      "acceptanceCriteria": [
+        "POST /api/venues/:venueId/courts creates court",
+        "PATCH /api/courts/:id updates court",
+        "DELETE /api/courts/:id deletes court",
+        "Validate venueId belongs to user's organization",
+        "Requires authentication",
+        "Typecheck passes"
+      ],
+      "priority": 42,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-043",
+      "title": "Implement time slot CRUD endpoints",
+      "description": "As an organizer, I want to manage time slots so that games can be scheduled.",
+      "acceptanceCriteria": [
+        "POST /api/courts/:courtId/timeslots creates time slot",
+        "POST /api/courts/:courtId/timeslots/bulk creates multiple time slots",
+        "PATCH /api/timeslots/:id updates time slot",
+        "DELETE /api/timeslots/:id deletes time slot",
+        "Validate no overlapping slots on same court",
+        "Typecheck passes"
+      ],
+      "priority": 43,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-044",
+      "title": "Create venue management page",
+      "description": "As an organizer, I want a venue management page so that I can configure facilities.",
+      "acceptanceCriteria": [
+        "Create /venues route with list of venues",
+        "Add New Venue button opens modal/form",
+        "Show venue name, address, court count",
+        "Click venue navigates to venue detail",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 44,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-045",
+      "title": "Create venue detail page with courts",
+      "description": "As an organizer, I want to manage courts within a venue so that games can be scheduled there.",
+      "acceptanceCriteria": [
+        "Create /venues/:id route showing venue details",
+        "List courts with name, surface type, indoor/outdoor",
+        "Add Court button opens form",
+        "Edit and delete court functionality",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 45,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-046",
+      "title": "Implement team CRUD for team-based tournaments",
+      "description": "As an organizer, I want to manage teams so that participants are configured.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/teams creates team with name, seed",
+        "GET /api/tournaments/:id/teams returns teams for tournament",
+        "PATCH /api/teams/:id updates team",
+        "DELETE /api/teams/:id deletes team",
+        "Validate tournament belongs to user's organization",
+        "Typecheck passes"
+      ],
+      "priority": 46,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-047",
+      "title": "Implement player CRUD for player-pooled tournaments",
+      "description": "As an organizer, I want to manage players so that team formation can occur.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/players registers player",
+        "GET /api/tournaments/:id/players returns registered players",
+        "PATCH /api/players/:id updates player details",
+        "DELETE /api/players/:id removes player registration",
+        "Typecheck passes"
+      ],
+      "priority": 47,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-048",
+      "title": "Create teams tab for tournament detail",
+      "description": "As an organizer, I want to see and manage teams in a tournament.",
+      "acceptanceCriteria": [
+        "Teams tab shows list of teams",
+        "For team-based: show team name, seed, roster count",
+        "For player-pooled: show registered players list",
+        "Add Team/Player button opens form",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 48,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-049",
+      "title": "Implement pool assignment endpoints",
+      "description": "As an organizer, I want to assign teams to pools so that pool play can be scheduled.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/pools creates pool with name",
+        "POST /api/tournaments/:id/pools/auto generates pools with snake seeding",
+        "PATCH /api/pools/:id updates pool",
+        "PATCH /api/teams/:id with poolId assigns team to pool",
+        "GET /api/tournaments/:id/pools returns pools with teams",
+        "Typecheck passes"
+      ],
+      "priority": 49,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-050",
+      "title": "Create pool assignment UI",
+      "description": "As an organizer, I want to assign teams to pools visually.",
+      "acceptanceCriteria": [
+        "Show pools as columns with team cards",
+        "Auto-generate pools button creates balanced pools",
+        "Drag-and-drop teams between pools (using react-dnd or similar)",
+        "Show seed number on team cards",
+        "Save button persists pool assignments",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 50,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-051",
+      "title": "Implement optimization config endpoints",
+      "description": "As an organizer, I want to configure optimization weights so that scheduling is fair.",
+      "acceptanceCriteria": [
+        "GET /api/tournaments/:id/optimization returns config (create default if not exists)",
+        "PATCH /api/tournaments/:id/optimization updates weights",
+        "Validate all weights are between 0.0 and 1.0",
+        "Typecheck passes"
+      ],
+      "priority": 51,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-052",
+      "title": "Create optimization weights UI",
+      "description": "As an organizer, I want to set optimization weights so that fairness priorities are clear.",
+      "acceptanceCriteria": [
+        "Add Settings tab to tournament detail",
+        "Show slider for each weight (0-100 scale)",
+        "Preset buttons: Balanced, Maximum Fairness, Fast Schedule",
+        "Show explanation tooltip for each weight",
+        "Save button calls PATCH endpoint",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 52,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-053",
+      "title": "Create Python schedule data models",
+      "description": "As a developer, I need data models in the optimizer so that schedules can be processed.",
+      "acceptanceCriteria": [
+        "Create Pydantic models: Team, Game, TimeSlot, Court, Schedule",
+        "Create OptimizationConfig model with all weight fields",
+        "Create ScheduleRequest model for API input",
+        "Create ScheduleResponse model for API output",
+        "mypy passes"
+      ],
+      "priority": 53,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-054",
+      "title": "Implement deterministic round robin scheduler",
+      "description": "As a developer, I need a round robin algorithm so that simple schedules can be generated quickly.",
+      "acceptanceCriteria": [
+        "Create round_robin.py with generate_round_robin function",
+        "Accept list of teams, return list of matchups per round",
+        "Handle odd number of teams with bye",
+        "Use circle method for balanced scheduling",
+        "Add unit tests",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 54,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-055",
+      "title": "Implement deterministic pool play scheduler",
+      "description": "As a developer, I need pool play scheduling so that games within pools are generated.",
+      "acceptanceCriteria": [
+        "Create pool_play.py with generate_pool_schedule function",
+        "Generate round robin within each pool",
+        "Balance home/away across matchups",
+        "Add unit tests",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 55,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-056",
+      "title": "Implement schedule slot assignment",
+      "description": "As a developer, I need to assign games to time slots and courts.",
+      "acceptanceCriteria": [
+        "Create slot_assignment.py with assign_slots function",
+        "Accept games and available time slots",
+        "Assign games to slots respecting court availability",
+        "Respect minimum rest time between games for same team",
+        "Return schedule with game-to-slot mappings",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 56,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-057",
+      "title": "Implement schedule conflict detection",
+      "description": "As a developer, I need conflict detection so that invalid schedules are prevented.",
+      "acceptanceCriteria": [
+        "Create conflicts.py with detect_conflicts function",
+        "Detect team double-booking (same team, same time)",
+        "Detect court double-booking",
+        "Detect rest time violations",
+        "Return list of Conflict objects with type and details",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 57,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-058",
+      "title": "Implement simulated annealing cost functions",
+      "description": "As a developer, I need cost functions so that schedule quality is measurable.",
+      "acceptanceCriteria": [
+        "Create cost_functions.py module",
+        "Implement rest_time_variance_cost",
+        "Implement opponent_repetition_cost",
+        "Implement court_utilization_cost",
+        "All costs return normalized value 0.0-1.0",
+        "Add unit tests for each cost function",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 58,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-059",
+      "title": "Implement simulated annealing neighbor generation",
+      "description": "As a developer, I need neighbor generation so that SA can explore the solution space.",
+      "acceptanceCriteria": [
+        "Create neighbors.py with generate_neighbor function",
+        "Implement swap_games move (swap two games' time slots)",
+        "Implement move_game move (move game to different slot)",
+        "Randomly select move type",
+        "Ensure neighbor is valid (no hard conflicts)",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 59,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-060",
+      "title": "Implement simulated annealing core algorithm",
+      "description": "As a developer, I need the SA optimizer so that complex schedules can be optimized.",
+      "acceptanceCriteria": [
+        "Create simulated_annealing.py with optimize function",
+        "Accept initial schedule and OptimizationConfig",
+        "Implement temperature decay (exponential cooling)",
+        "Accept probability based on cost delta and temperature",
+        "Track best solution found",
+        "Return best schedule with final cost breakdown",
+        "mypy passes",
+        "Tests pass"
+      ],
+      "priority": 60,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-061",
+      "title": "Implement SA configuration and tuning",
+      "description": "As a developer, I need SA configuration so that optimization is tunable.",
+      "acceptanceCriteria": [
+        "Add SAConfig model: initialTemp, coolingRate, maxIterations, seed",
+        "Implement early stopping when no improvement for N iterations",
+        "Support deterministic seed for reproducibility",
+        "Log progress at intervals",
+        "Auto-tune initial temperature based on tournament size",
+        "mypy passes"
+      ],
+      "priority": 61,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-062",
+      "title": "Create optimizer API endpoint for schedule generation",
+      "description": "As a developer, I need an API endpoint so that the Node.js API can request schedule optimization.",
+      "acceptanceCriteria": [
+        "POST /optimize accepts ScheduleRequest",
+        "Accept mode parameter: 'fast' or 'optimize'",
+        "Fast mode uses deterministic scheduler",
+        "Optimize mode uses simulated annealing",
+        "Return ScheduleResponse with schedule and metrics",
+        "Return cost breakdown per objective",
+        "mypy passes"
+      ],
+      "priority": 62,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-063",
+      "title": "Implement Node.js schedule generation endpoint",
+      "description": "As a frontend, I need a schedule generation API so that organizers can trigger optimization.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/generate-schedule",
+        "Accept mode parameter: 'fast' or 'optimize'",
+        "Gather tournament data (teams, pools, courts, time slots, config)",
+        "Call Python optimizer service",
+        "Store generated games in database",
+        "Return schedule with games and metrics",
+        "Requires ORGANIZER role",
+        "Typecheck passes"
+      ],
+      "priority": 63,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-064",
+      "title": "Create schedule generation UI",
+      "description": "As an organizer, I want to generate schedules so that games are planned.",
+      "acceptanceCriteria": [
+        "Add Schedule tab to tournament detail",
+        "Show Generate Schedule button with mode dropdown (Fast/Optimize)",
+        "Show loading state during generation",
+        "Display generated schedule in grid (time slots x courts)",
+        "Show each game with team names",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 64,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-065",
+      "title": "Display schedule fairness metrics",
+      "description": "As an organizer, I want to see fairness metrics so that I understand schedule quality.",
+      "acceptanceCriteria": [
+        "Show cost breakdown panel next to schedule",
+        "Display score for each objective (0-100 scale)",
+        "Color code: green (<30), yellow (30-60), red (>60)",
+        "Show overall fairness score",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 65,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-066",
+      "title": "Implement game CRUD endpoints",
+      "description": "As an organizer, I want to manage individual games so that the schedule can be adjusted.",
+      "acceptanceCriteria": [
+        "GET /api/tournaments/:id/games returns all games",
+        "PATCH /api/games/:id updates game (time slot, court, teams)",
+        "Validate no conflicts on update",
+        "Support filtering by round, status",
+        "Typecheck passes"
+      ],
+      "priority": 66,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-067",
+      "title": "Implement score entry endpoint",
+      "description": "As an organizer, I want to enter scores so that standings update.",
+      "acceptanceCriteria": [
+        "PATCH /api/games/:id/score accepts homeScore, awayScore",
+        "Set winnerId based on scores",
+        "Update game status to COMPLETED",
+        "Validate game exists and is SCHEDULED or IN_PROGRESS",
+        "Typecheck passes"
+      ],
+      "priority": 67,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-068",
+      "title": "Create score entry UI",
+      "description": "As an organizer, I want to enter game scores so that results are recorded.",
+      "acceptanceCriteria": [
+        "Click game in schedule opens score modal",
+        "Show team names and current score inputs",
+        "Submit button saves score",
+        "Game card updates to show score",
+        "Completed games show different styling",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 68,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-069",
+      "title": "Implement standings calculation",
+      "description": "As a developer, I need standings calculation so that rankings are computed.",
+      "acceptanceCriteria": [
+        "GET /api/tournaments/:id/standings returns team standings",
+        "Calculate wins, losses, points for, points against, differential",
+        "For pool play, group standings by pool",
+        "Sort by wins desc, then differential desc",
+        "Typecheck passes"
+      ],
+      "priority": 69,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-070",
+      "title": "Create standings tab UI",
+      "description": "As an organizer, I want to see standings so that I know current rankings.",
+      "acceptanceCriteria": [
+        "Add Standings tab to tournament detail",
+        "Show standings table: rank, team, W-L, PF, PA, Diff",
+        "For pool play, show separate table per pool",
+        "Auto-refresh when scores are entered",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 70,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-071",
+      "title": "Implement tournament publish endpoint",
+      "description": "As an organizer, I want to publish my tournament so that it becomes active.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/publish changes status to PUBLISHED",
+        "Validate tournament has teams, schedule, courts",
+        "Return validation errors if incomplete",
+        "Cannot publish if already published",
+        "Typecheck passes"
+      ],
+      "priority": 71,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-072",
+      "title": "Create public tournament overview page",
+      "description": "As a visitor, I want to see tournament overview without logging in.",
+      "acceptanceCriteria": [
+        "Create /:orgSlug/:tournamentSlug route (public, no auth)",
+        "Show tournament name, dates, venue, format, status",
+        "Show navigation to schedule, standings, bracket",
+        "Use PublicLayout (no sidebar)",
+        "Mobile responsive",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 72,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-073",
+      "title": "Create public schedule view",
+      "description": "As a visitor, I want to see the tournament schedule publicly.",
+      "acceptanceCriteria": [
+        "Create /:orgSlug/:tournamentSlug/schedule route",
+        "Show games in grid or list view",
+        "Show game time, court, teams, score (if completed)",
+        "Highlight current/next games",
+        "Filter by round or team",
+        "Mobile responsive",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 73,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-074",
+      "title": "Create public standings view",
+      "description": "As a visitor, I want to see standings publicly.",
+      "acceptanceCriteria": [
+        "Create /:orgSlug/:tournamentSlug/standings route",
+        "Show standings tables (same as organizer view)",
+        "Read-only, no edit capabilities",
+        "Mobile responsive",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 74,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-075",
+      "title": "Implement bracket generation endpoint",
+      "description": "As an organizer, I want to generate brackets so that elimination rounds can begin.",
+      "acceptanceCriteria": [
+        "POST /api/tournaments/:id/brackets/generate creates bracket",
+        "Accept type parameter: single_elim or double_elim",
+        "Seed teams from pool play results or manual seeds",
+        "Create BracketSlot entries for all matches",
+        "Standard positioning (1v8, 4v5, 2v7, 3v6)",
+        "Typecheck passes"
+      ],
+      "priority": 75,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-076",
+      "title": "Implement bracket advancement logic",
+      "description": "As a developer, I need bracket advancement so that winners progress.",
+      "acceptanceCriteria": [
+        "When game score is entered, update winner's next BracketSlot",
+        "For double elim, update loser bracket as well",
+        "Create next round games when all current round complete",
+        "Handle finals and championship scenarios",
+        "Typecheck passes"
+      ],
+      "priority": 76,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-077",
+      "title": "Create bracket visualization component",
+      "description": "As a user, I want to see brackets visually so that I can follow elimination rounds.",
+      "acceptanceCriteria": [
+        "Create Bracket component displaying tournament bracket",
+        "Show match boxes with team names and scores",
+        "Connect matches with lines showing advancement",
+        "Highlight completed vs upcoming matches",
+        "Support both single and double elimination",
+        "Horizontally scrollable on mobile",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 77,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-078",
+      "title": "Create public bracket view",
+      "description": "As a visitor, I want to see the bracket publicly.",
+      "acceptanceCriteria": [
+        "Create /:orgSlug/:tournamentSlug/bracket route",
+        "Use Bracket component to display bracket",
+        "Show scores for completed games",
+        "Mobile responsive",
+        "Typecheck passes",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 78,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-079",
+      "title": "Create Terraform base infrastructure",
+      "description": "As a developer, I need Terraform configuration so that AWS infrastructure can be provisioned.",
+      "acceptanceCriteria": [
+        "Create /infra/terraform directory structure",
+        "Configure AWS provider",
+        "Create VPC module with public and private subnets",
+        "Configure remote state in S3 with DynamoDB locking",
+        "Add dev and prod workspace configurations",
+        "terraform init and plan run without errors"
+      ],
+      "priority": 79,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-080",
+      "title": "Create Terraform RDS module",
+      "description": "As a developer, I need RDS provisioning so that the database is deployed.",
+      "acceptanceCriteria": [
+        "Create RDS PostgreSQL 15 instance in private subnet",
+        "Configure security group allowing access from ECS",
+        "Enable automated backups (7-day retention)",
+        "Store credentials in AWS Secrets Manager",
+        "Output connection string",
+        "terraform plan shows correct resources"
+      ],
+      "priority": 80,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-081",
+      "title": "Create Terraform ECS module",
+      "description": "As a developer, I need ECS provisioning so that backend services can be deployed.",
+      "acceptanceCriteria": [
+        "Create ECS cluster",
+        "Create task definitions for API and Optimizer services",
+        "Configure ALB with target groups",
+        "Set up CloudWatch log groups",
+        "Configure auto-scaling policies",
+        "terraform plan shows correct resources"
+      ],
+      "priority": 81,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-082",
+      "title": "Create Terraform CloudFront and S3 module",
+      "description": "As a developer, I need CloudFront/S3 so that the frontend can be deployed.",
+      "acceptanceCriteria": [
+        "Create S3 bucket for static assets",
+        "Configure bucket policy for CloudFront access",
+        "Create CloudFront distribution",
+        "Configure custom domain fairbracket.com",
+        "Enable HTTPS redirect",
+        "terraform plan shows correct resources"
+      ],
+      "priority": 82,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-083",
+      "title": "Create Terraform Route 53 and ACM module",
+      "description": "As a developer, I need DNS and SSL so that fairbracket.com is configured.",
+      "acceptanceCriteria": [
+        "Create Route 53 hosted zone for fairbracket.com",
+        "Request ACM certificate for *.fairbracket.com",
+        "Configure DNS validation records",
+        "Create A/AAAA records for CloudFront",
+        "Create CNAME for api.fairbracket.com to ALB",
+        "terraform plan shows correct resources"
+      ],
+      "priority": 83,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-084",
+      "title": "Create GitHub Actions CI workflow",
+      "description": "As a developer, I need CI so that PRs are automatically tested.",
+      "acceptanceCriteria": [
+        "Create .github/workflows/ci.yml",
+        "Run on push to main and pull requests",
+        "Install dependencies for all workspaces",
+        "Run typecheck on all TypeScript packages",
+        "Run ESLint on all packages",
+        "Run tests on all packages",
+        "Run mypy and pytest on optimizer",
+        "Workflow passes"
+      ],
+      "priority": 84,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-085",
+      "title": "Create Dockerfiles for API and Optimizer",
+      "description": "As a developer, I need Docker images so that services can be deployed.",
+      "acceptanceCriteria": [
+        "Create /apps/api/Dockerfile with multi-stage build",
+        "Create /apps/optimizer/Dockerfile",
+        "Both images build successfully",
+        "Images run and respond to health checks",
+        "Use appropriate base images (node:20-alpine, python:3.11-slim)"
+      ],
+      "priority": 85,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-086",
+      "title": "Create GitHub Actions deploy workflow",
+      "description": "As a developer, I need CD so that code is automatically deployed.",
+      "acceptanceCriteria": [
+        "Create .github/workflows/deploy.yml",
+        "Trigger on push to main branch",
+        "Build and push Docker images to ECR",
+        "Deploy API and Optimizer to ECS",
+        "Build frontend and sync to S3",
+        "Invalidate CloudFront cache",
+        "Workflow configuration is valid"
+      ],
+      "priority": 86,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
